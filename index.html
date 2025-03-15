@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingston Logo Animation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+    <script>
+        let logos = [];
+        let currentLogo;
+        let position;
+        let velocity;
+        let canvasBackground = '#f5f5f5';
+        
+        // Logo background color options for each logo
+        const logoBackgrounds = {
+            'logo1': ['#000000', '#f5f5f5'], // Black or light gray
+            'logo2': ['#ffffff', '#f5f5f5'], // White or light gray
+            'logo3': ['#ffffff', '#f5f5f5'], // White or light gray
+            'logo4': ['#FFED00', '#f5f5f5'], // Yellow or light gray
+            'logo5': ['#000000', '#f5f5f5'], // Black or light gray
+            'logo6': ['#FFED00', '#f5f5f5']  // Yellow or light gray
+        };
+        
+        function preload() {
+            // Load all logo images
+            for (let i = 1; i <= 6; i++) {
+                logos.push(loadImage(`logos/logo${i}.png`));
+            }
+        }
+        
+        function setup() {
+            createCanvas(windowWidth, windowHeight);
+            // Select random logo to start
+            currentLogo = floor(random(logos.length));
+            // Set initial position and velocity
+            position = createVector(width/2, height/2);
+            velocity = createVector(random(2, 4), random(2, 4));
+            
+            // Set initial background color
+            canvasBackground = '#f5f5f5';
+        }
+        
+        function draw() {
+            background(canvasBackground);
+            
+            // Update position
+            position.add(velocity);
+            
+            // Get current logo dimensions
+            let imgWidth = logos[currentLogo].width;
+            let imgHeight = logos[currentLogo].height;
+            
+            // Scale logo if too large (maintaining aspect ratio)
+            let scale = 1;
+            if (imgWidth > width/4 || imgHeight > height/4) {
+                scale = min(width/4/imgWidth, height/4/imgHeight);
+            }
+            
+            let displayWidth = imgWidth * scale;
+            let displayHeight = imgHeight * scale;
+            
+            // Check for collisions
+            let collision = false;
+            
+            if (position.x <= 0 || position.x + displayWidth >= width) {
+                velocity.x *= -1;
+                collision = true;
+            }
+            
+            if (position.y <= 0 || position.y + displayHeight >= height) {
+                velocity.y *= -1;
+                collision = true;
+            }
+            
+            // If collision, change logo and background
+            if (collision) {
+                // Change to a new random logo
+                let newLogo = currentLogo;
+                while (newLogo === currentLogo) {
+                    newLogo = floor(random(logos.length));
+                }
+                currentLogo = newLogo;
+                
+                // Get the current logo name
+                let logoName = `logo${currentLogo + 1}`;
+                
+                // Choose randomly between primary color background and light gray
+                canvasBackground = random(logoBackgrounds[logoName]);
+            }
+            
+            // Draw the logo
+            image(logos[currentLogo], position.x, position.y, displayWidth, displayHeight);
+        }
+        
+        // Make canvas responsive
+        function windowResized() {
+            resizeCanvas(windowWidth, windowHeight);
+        }
+    </script>
+</body>
+</html>
