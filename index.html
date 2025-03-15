@@ -13,7 +13,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f5f5f5;
+            background-color: #D1D3D4;
         }
         canvas {
             display: block;
@@ -27,16 +27,16 @@
         let currentLogo;
         let position;
         let velocity;
-        let canvasBackground = '#f5f5f5';
+        let canvasBackground = '#D1D3D4';
         
         // Logo background color options for each logo
         const logoBackgrounds = {
-            'logo1': ['#000000', '#f5f5f5'], // Black or light gray
-            'logo2': ['#ffffff', '#f5f5f5'], // White or light gray
-            'logo3': ['#ffffff', '#f5f5f5'], // White or light gray
-            'logo4': ['#FFED00', '#f5f5f5'], // Yellow or light gray
-            'logo5': ['#000000', '#f5f5f5'], // Black or light gray
-            'logo6': ['#FFED00', '#f5f5f5']  // Yellow or light gray
+            'logo1': ['#000000', '#D1D3D4'], // Black or light gray
+            'logo2': ['#ffffff', '#D1D3D4'], // White or light gray
+            'logo3': ['#ffffff', '#D1D3D4'], // White or light gray
+            'logo4': ['#FFF200', '#D1D3D4'], // Yellow or light gray
+            'logo5': ['#000000', '#D1D3D4'], // Black or light gray
+            'logo6': ['#FFF200', '#D1D3D4']  // Yellow or light gray
         };
         
         function preload() {
@@ -55,7 +55,7 @@
             velocity = createVector(random(2, 4), random(2, 4));
             
             // Set initial background color
-            canvasBackground = '#f5f5f5';
+            canvasBackground = '#D1D3D4';
         }
         
         function draw() {
